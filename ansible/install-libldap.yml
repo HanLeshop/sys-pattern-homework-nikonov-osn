@@ -1,0 +1,11 @@
+---
+- name: libldap
+  hosts: web_servers,kibana,elastic
+  become: true
+
+  tasks:
+    - name: libldap-2.5-0
+      apt:
+        name: libldap-2.5-0
+        state: present
+        update_cache: yes

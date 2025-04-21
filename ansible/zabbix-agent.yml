@@ -1,0 +1,41 @@
+---
+- name: Zabbix agent
+  hosts: web_servers,kibana,elastic
+  become: true
+
+  tasks:
+    - name: Zabbix release
+      get_url:
+        url: https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_6.0+ubuntu22.04_all.deb
+        dest: /tmp/zabbix-release.deb
+
+    - name: Install Zabbix
+      apt:
+        deb: /tmp/zabbix-release.deb
+
+    - name: Update apt
+      apt:
+        update_cache: yes
+
+    - name: Install Zabbix agent
+      apt:
+        name: zabbix-agent
+        state: present
+
+    - name: Zabbix enabled and running
+      systemd:
+        name: zabbix-agent
+        state: started
+        enabled: true
+
+    - name: Server addr
+      lineinfile:
+        path: /etc/zabbix/zabbix_agentd.conf
+        regexp: '^Server=.*'
+        line: 'Server=10.0.1.31,158.160.57.235'
+
+  handlers:
+    - name: Rest Zabbix
+      systemd:
+        name: zabbix-agent
+        state: restarted

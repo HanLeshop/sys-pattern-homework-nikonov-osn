@@ -1,0 +1,24 @@
+---
+- name: Yandex mirrors
+  hosts: web_servers,kibana,elastic
+  become: yes
+
+  tasks:
+    - name: Add mirr1
+      apt_repository:
+        repo: "deb http://mirror.yandex.ru/ubuntu jammy main restricted universe multiverse"
+        state: present
+
+    - name: Add mirr2
+      apt_repository:
+        repo: "deb http://mirror.yandex.ru/ubuntu jammy-updates main restricted universe multiverse"
+        state: present
+
+    - name: Add mirr3
+      apt_repository:
+        repo: "deb http://mirror.yandex.ru/ubuntu jammy-security main restricted universe multiverse"
+        state: present
+
+    - name: Update apt
+      apt:
+        update_cache: yes
