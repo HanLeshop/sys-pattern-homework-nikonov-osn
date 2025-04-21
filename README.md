@@ -109,5 +109,5 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 ### Elastic, Kibana, Filebaet
 ![elastic](elastic.jpg)
 ![kibana](kibana.jpg)
-![web_filebeat](web_filebaet.jpg)
+![web_filebeat](web_filebeat.jpg)
 ![static_files](static_files.jpg)
