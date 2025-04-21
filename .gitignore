@@ -15,4 +15,4 @@ id_rsa
 id_rsa.pub
 
 #Hosts
-ansible/hosts.ini
+hosts.ini
