@@ -110,4 +110,6 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 ![elastic](elastic.jpg)
 ![kibana](kibana.jpg)
 ![web_filebeat](web_filebeat.jpg)
+
+###Static Files Nginx
 ![static_files](static_files.jpg)
