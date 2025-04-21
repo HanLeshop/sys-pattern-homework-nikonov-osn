@@ -3,7 +3,7 @@ resource "yandex_vpc_security_group" "lb_sg" {
   name       = "lb-sg"
   network_id = yandex_vpc_network.main_net.id
 
-####80
+####80   Настройка своей сети. Для проверки поставил 0.0.0.0/0
   ingress {
     protocol       = "TCP"
     port           = 80

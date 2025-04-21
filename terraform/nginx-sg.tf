@@ -17,7 +17,7 @@ resource "yandex_vpc_security_group" "web_sg" {
     security_group_id = yandex_vpc_security_group.bastion_sg.id
   }
 
-####ANY
+####ANY Настройка своей сети. Для проверки поставил 0.0.0.0/0
   egress {
     protocol       = "ANY"
     v4_cidr_blocks = ["0.0.0.0/0"]

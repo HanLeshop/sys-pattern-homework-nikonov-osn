@@ -3,7 +3,7 @@ resource "yandex_vpc_security_group" "bastion_sg" {
   name       = "bastion-sg"
   network_id = yandex_vpc_network.main_net.id
 
-####
+####["0.0.0.0/0"]   Настройка своей сети. Для проверки поставил 0.0.0.0/0
   ingress {
     protocol       = "TCP"
     port          = 22
