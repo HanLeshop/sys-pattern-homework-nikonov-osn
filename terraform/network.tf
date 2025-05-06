@@ -1,7 +1,7 @@
 ####VPC
 resource "yandex_vpc_network" "main_net" {
   name           = "VPC"
-  folder_id      = "b1gn2i4hhslqsuta1jco"
+  folder_id      = var.folder_id
 }
 
 ####Public-a

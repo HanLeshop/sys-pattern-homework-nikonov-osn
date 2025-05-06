@@ -1,6 +1,6 @@
 ---
 - name: libldap
-  hosts: web_servers,kibana,elastic
+  hosts: webservers,kibana,elastic
   become: true
 
   tasks:

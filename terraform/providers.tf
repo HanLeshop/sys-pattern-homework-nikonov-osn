@@ -10,7 +10,7 @@ terraform {
 
 ####Cloud and Folder
 provider "yandex" {
+  service_account_key_file = file("~/.terraform_keys/123.json")
   cloud_id    = var.cloud_id
   folder_id   = var.folder_id
-  token       = var.oauth_token
 }

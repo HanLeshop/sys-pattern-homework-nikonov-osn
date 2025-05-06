@@ -11,18 +11,18 @@ resource "yandex_compute_instance" "nginx_vm1" {
 ####Disk
   boot_disk {
     initialize_params {
-      image_id = "fd8kc2n656prni2cimp5"
+      image_id = var.image_id
       size     = 10
     }
   }
 ####Net
   network_interface {
-    subnet_id = "e9b23oec6grjif2oq6md"
+    subnet_id = yandex_vpc_subnet.public_a.id
     nat       = false
   }
 ####SSH
   metadata = {
-    ssh-keys = "ubuntu:${file("/home/dani/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file(var.ssh_public_key_path)}"
   }
 }
 
@@ -39,17 +39,17 @@ resource "yandex_compute_instance" "nginx_vm2" {
 ####Disk
   boot_disk {
     initialize_params {
-      image_id = "fd8kc2n656prni2cimp5"
+      image_id = var.image_id
       size     = 10
     }
   }
 ####Net
   network_interface {
-    subnet_id = "e2la8sbgmmh5vse02rb0"
+    subnet_id = yandex_vpc_subnet.public_a.id
     nat       = false
   }
 ####SSH
   metadata = {
-    ssh-keys = "ubuntu:${file("/home/dani/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file(var.ssh_public_key_path)}"
   }
 }

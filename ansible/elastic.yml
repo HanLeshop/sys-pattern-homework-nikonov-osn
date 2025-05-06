@@ -1,0 +1,47 @@
+---
+- name: Elasticsearch
+  hosts: elastic
+  become: yes
+  tasks:
+
+    - name: Copy Elastic
+      ansible.builtin.copy:
+        src: ~/Downloads/elasticsearch-7.10.2-amd64.deb
+        dest: /tmp/elasticsearch-7.10.2-amd64.deb
+        mode: '0644'
+
+    - name: Inst. Elastic
+      ansible.builtin.apt:
+        deb: /tmp/elasticsearch-7.10.2-amd64.deb
+        state: present
+        update_cache: yes
+
+    - name: Conf. network.host
+      ansible.builtin.lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        regexp: '^network\.host:'
+        line: 'network.host: 0.0.0.0'
+        insertafter: '^#.*network\.host:'
+        backup: yes
+
+    - name: single-node
+      ansible.builtin.lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        line: 'discovery.type: single-node'
+        insertafter: EOF
+        create: yes
+        backup: yes
+
+    - name: port 9200
+      ansible.builtin.command: ufw allow 9200
+      when: ansible_facts['distribution'] == "Ubuntu"
+
+    - name: Enable Elastic
+      ansible.builtin.systemd:
+        name: elasticsearch
+        enabled: true
+
+    - name: Start Elastic
+      ansible.builtin.systemd:
+        name: elasticsearch
+        state: started

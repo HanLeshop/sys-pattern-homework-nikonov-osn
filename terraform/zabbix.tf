@@ -12,7 +12,7 @@ resource "yandex_compute_instance" "zabbix_vm" {
 ####Disk
   boot_disk {
     initialize_params {
-      image_id = "fd8r7e7939o13595bpef"
+      image_id = var.image_id
       size     = 10
     }
   }
@@ -26,6 +26,6 @@ resource "yandex_compute_instance" "zabbix_vm" {
   }
 ####SSH
   metadata = {
-    ssh-keys = "ubuntu:${file("/home/dani/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file(var.ssh_public_key_path)}"
   }
 }

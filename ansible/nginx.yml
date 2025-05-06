@@ -1,18 +1,52 @@
-- name: Nginx
-  hosts: web_servers
+---
+- name: nginx
+  hosts: webservers
   become: yes
+
+  vars:
+    site_config: static
+    local_static_dir: static-nginx
+    site_conf_path: /etc/nginx/sites-available
+    web_root: /var/www/html
+
   tasks:
-    - name: Update
+    - name: Inst. nginx
       apt:
+        name: nginx
+        state: latest
         update_cache: yes
 
-    - name: apt Nginx
-      apt:
-        name: nginx
-        state: present
+    - name: Del. nginx
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
 
-    - name: start Nginx
+    - name: Copy static
+      copy:
+        src: static-nginx/static
+        dest: /etc/nginx/sites-available/static
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Link
+      file:
+        src: /etc/nginx/sites-available/static
+        dest: /etc/nginx/sites-enabled/static
+        state: link
+        force: yes
+
+    - name: index.html
+      copy:
+        src: static-nginx/index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Restart nginx
       service:
         name: nginx
-        state: started
+        state: restarted
         enabled: yes
+

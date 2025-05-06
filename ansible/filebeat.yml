@@ -1,0 +1,34 @@
+---
+- name: Filebeat
+  hosts: webservers
+  become: yes
+  tasks:
+
+    - name: Copy Filebeat
+      ansible.builtin.copy:
+        src: ~/Downloads/filebeat-7.10.2-amd64.deb
+        dest: /tmp/filebeat-7.10.2-amd64.deb
+        mode: '0644'
+
+    - name: Inst. Filebeat
+      ansible.builtin.apt:
+        deb: /tmp/filebeat-7.10.2-amd64.deb
+        state: present
+        update_cache: yes
+
+    - name: Enable Filebeat
+      ansible.builtin.command: filebeat modules enable nginx
+
+    - name: Elastic output
+      ansible.builtin.blockinfile:
+        path: /etc/filebeat/filebeat.yml
+        marker: "# {mark} ANSIBLE MANAGED ELASTICSEARCH OUTPUT"
+        block: |
+          output.elasticsearch:
+            hosts: ["http://elastic-vm.ru-central1.internal:9200"]
+
+    - name: Enable and start Filebeat
+      ansible.builtin.systemd:
+        name: filebeat
+        enabled: true
+        state: restarted

@@ -11,7 +11,7 @@ resource "yandex_compute_instance" "bastion_host" {
 #Disk
   boot_disk {
     initialize_params {
-      image_id = "fd8l704v1313gha28lj8"
+      image_id = var.image_id
       size     = 20
       type     = "network-hdd"
     }
@@ -29,6 +29,6 @@ resource "yandex_compute_instance" "bastion_host" {
   }
 ####SSH
   metadata = {
-    ssh-keys = "ubuntu:${file("/home/dani/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file(var.ssh_public_key_path)}"
   }
 }

@@ -15,3 +15,14 @@ variable "oauth_token" {
 variable "ssh_public_key" {
   type        = string
 }
+
+####image
+variable "image_id" {
+  type        = string
+}
+
+###SSH
+variable "ssh_public_key_path" {
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+}

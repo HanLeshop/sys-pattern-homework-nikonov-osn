@@ -12,7 +12,7 @@ resource "yandex_compute_instance" "kibana_vm" {
 ####Disk
   boot_disk {
     initialize_params {
-      image_id = "fd8kc2n656prni2cimp5"
+      image_id = var.image_id
       size     = 10
     }
   }
@@ -23,6 +23,6 @@ resource "yandex_compute_instance" "kibana_vm" {
   }
 ####SSH
   metadata = {
-    ssh-keys = "ubuntu:${file("/home/dani/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file(var.ssh_public_key_path)}"
   }
 }

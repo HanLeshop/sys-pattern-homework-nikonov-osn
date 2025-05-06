@@ -1,6 +1,6 @@
 ---
 - name: Yandex mirrors
-  hosts: web_servers,kibana,elastic
+  hosts: webservers,kibana,elastic
   become: yes
 
   tasks:

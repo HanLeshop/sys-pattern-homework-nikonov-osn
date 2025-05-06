@@ -16,3 +16,8 @@ id_rsa.pub
 
 #Hosts
 hosts.ini
+
+#Variable
+*.tfvars
+*.json
+
